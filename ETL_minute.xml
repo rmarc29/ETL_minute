@@ -1,6 +1,6 @@
 <Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
 
-	<Script file="etl.lua"/> 
+	<Script file="ETL_minute.lua"/> 
   
 	<Frame name="ETL_frame" parent="UIParent" frameStrata="FULLSCREEN_DIALOG" toplevel="true" enableMouse="true" movable="true">
 		<Size><AbsDimension x="150" y="70" /></Size>
