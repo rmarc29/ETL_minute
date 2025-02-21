@@ -47,7 +47,7 @@ function update_display(xp_per_minute, etl_minutes)
         <body>
             <h1 align="center">ETL %s</h1>
             <br/>
-            <h2 align="center">XP/minute %i</h2>
+            <h2 align="center">XP/min %i</h2>
         </body>
         </html>
         ]],
