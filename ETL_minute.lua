@@ -3,23 +3,25 @@ ETL_frame_coordinates = { x = 0, y = 0 }
 
 local REFRESH_INTERVAL = 1
 local last_update = 0
+local font_applied = false -- New flag to check if font was applied
 
 local function ETL_SetCustomFont()
     local fontPath = "Interface\\AddOns\\ETL_minute\\Enchanted_Land.ttf"
-    local fontSize = 14  
+    local fontSize = 14  -- Adjust as needed
 
     if ETL_CustomFontString then
-        ETL_CustomFontString:SetFont(fontPath, fontSize, "OUTLINE")
-        ETL_CustomFontString:SetText("Loading...")
-    else
-        DEFAULT_CHAT_FRAME:AddMessage("ETL: FontString not found!")
-    end
-end
+        local success = ETL_CustomFontString:SetFont(fontPath, fontSize, "OUTLINE")
+        
+        if not success then
+            DEFAULT_CHAT_FRAME:AddMessage("|cffff0000ETL: Failed to load custom font. Falling back to default.|r")
+            ETL_CustomFontString:SetFont("Fonts\\FRIZQT__.TTF", fontSize, "OUTLINE")
+        end
 
-function ETL_on_xp_gain()
-    local _, _, xp_part = strfind(arg1, '(%d+)')
-    local gained_xp = tonumber(xp_part)
-    tinsert(ETL_xp_gains, { t=GetTime(), xp=gained_xp })
+        ETL_CustomFontString:SetText("ETL Loaded")
+        font_applied = true -- Mark font as applied
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("|cffff0000ETL: FontString not found!|r")
+    end
 end
 
 function ETL_on_load()
@@ -30,12 +32,13 @@ function ETL_on_load()
             xp_gain.t = xp_gain.t - t0
         end
     end
-
-    
-    ETL_SetCustomFont()
 end
 
 function ETL_on_update()
+    if not font_applied then
+        ETL_SetCustomFont() -- Apply font once when the UI is ready
+    end
+
     if GetTime() - last_update > REFRESH_INTERVAL then
         last_update = GetTime()
         while ETL_xp_gains[1] and GetTime() - ETL_xp_gains[1].t > 60 do
@@ -53,9 +56,11 @@ function ETL_on_update()
 end
 
 function update_display(xp_per_minute, etl_minutes)
-    if ETL_CustomFontString then
+    if ETL_CustomFontString and ETL_CustomFontString:GetFont() then
         ETL_CustomFontString:SetText(string.format("ETL: %s\nXP/min: %i",
             xp_per_minute > 0 and string.format("%im", etl_minutes) or "N/A",
             xp_per_minute))
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("|cffff0000ETL: Font not set yet!|r")
     end
 end
