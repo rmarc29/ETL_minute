@@ -1,47 +1,43 @@
 <Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
 
-    <Script file="ETL_minute.lua"/> 
+	<Script file="ETL_minute.lua"/> 
   
-    <Frame name="ETL_frame" parent="UIParent" frameStrata="FULLSCREEN_DIALOG" toplevel="true" enableMouse="true" movable="true">
-        <Size><AbsDimension x="150" y="70" /></Size>
-        <Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="-200"/></Offset></Anchor></Anchors>
-        <Scripts> 
-            <OnLoad>
-                this:RegisterEvent('CHAT_MSG_COMBAT_XP_GAIN')
-                this:RegisterForDrag('LeftButton')
-                this:SetPoint('TOP', ETL_frame_coordinates.x, ETL_frame_coordinates.y)
-                ETL_on_load()
-            </OnLoad>
-            <OnDragStart>this:StartMoving()</OnDragStart>
-            <OnDragStop>
-                this:StopMovingOrSizing()
-                local _, _, _, x, y = this:GetPoint(1)
-                ETL_frame_coordinates.x = x
-                ETL_frame_coordinates.y = y
-            </OnDragStop>
-            <OnEvent> 
-                ETL_on_xp_gain()
-            </OnEvent>
-            <OnUpdate>
-                ETL_on_update()
-            </OnUpdate>
-        </Scripts>
-        <Backdrop bgFile="Interface/Tooltips/UI-Tooltip-Background" edgeFile="Interface/Tooltips/UI-Tooltip-Border" tile="true">
-            <BackgroundInsets><AbsInset left="11" right="12" top="12" bottom="11"/></BackgroundInsets>
-            <TileSize><AbsValue val="32"/></TileSize>
-            <EdgeSize><AbsValue val="32"/></EdgeSize>
-        </Backdrop>
-        <Layers>
-            <Layer level="OVERLAY">
-                <FontString name="ETL_CustomFontString">
-                    <Size><AbsDimension x="150" y="40" /></Size>
-                    <Anchors>
-                        <Anchor point="CENTER"/>
-                    </Anchors>
-                    <JustifyH value="CENTER"/>
-                    <JustifyV value="MIDDLE"/>
-                </FontString>
-            </Layer>
-        </Layers>
-    </Frame>
+	<Frame name="ETL_frame" parent="UIParent" frameStrata="FULLSCREEN_DIALOG" toplevel="true" enableMouse="true" movable="true">
+		<Size><AbsDimension x="150" y="70" /></Size>
+		<Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="-200"/></Offset></Anchor></Anchors>
+		<Scripts> 
+			<OnLoad>
+				this:RegisterEvent('CHAT_MSG_COMBAT_XP_GAIN')
+				this:RegisterForDrag('LeftButton')
+				this:SetPoint('TOP', ETL_frame_coordinates.x, ETL_frame_coordinates.y)
+				ETL_on_load()
+			</OnLoad>
+			<OnDragStart>this:StartMoving()</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing()
+				local _, _, _, x, y = this:GetPoint(1)
+				ETL_frame_coordinates.x = x
+				ETL_frame_coordinates.y = y
+			</OnDragStop>
+			<OnEvent> 
+				ETL_on_xp_gain()
+			</OnEvent>
+			<OnUpdate>
+				ETL_on_update()
+			</OnUpdate>
+		</Scripts>
+		<Backdrop bgFile="Interface/Tooltips/UI-Tooltip-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile="true">
+			<BackgroundInsets><AbsInset left="11" right="12" top="12" bottom="11"/></BackgroundInsets>
+			<TileSize><AbsValue val="32"/></TileSize>
+			<EdgeSize><AbsValue val="32"/></EdgeSize>
+		</Backdrop>
+		<Frames>
+			<SimpleHTML name="$parent_html">
+				<Size><AbsDimension x="150" y="1" /></Size>		
+				<Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
+				<FontString inherits="GameFontHighlightSmall"/>
+				<FontStringHeader1 inherits="GameFontNormal"/>
+			</SimpleHTML>	
+		</Frames>
+	</Frame>
 </Ui>
