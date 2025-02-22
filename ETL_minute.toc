@@ -1,5 +1,7 @@
 ## Interface: 11200
-## Title: ETL
+## Title: ETL_minute
 ## SavedVariablesPerCharacter: ETL_xp_gains, ETL_frame_coordinates
+## Author : shirsig
+## Version by : rmarc29 (aka TNS)
 ETL_minute.xml
 
