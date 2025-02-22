@@ -31,13 +31,17 @@
             <TileSize><AbsValue val="32"/></TileSize>
             <EdgeSize><AbsValue val="32"/></EdgeSize>
         </Backdrop>
-        <Frames>
-            <SimpleHTML name="ETL_frame_html">
-                <Size><AbsDimension x="150" y="1" /></Size>		
-                <Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="-18"/></Offset></Anchor></Anchors>
-                <FontString inherits="GameFontHighlightSmall"/>
-                <FontStringHeader1 inherits="GameFontNormal"/>
-            </SimpleHTML>	
-        </Frames>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="ETL_CustomFontString">
+                    <Size><AbsDimension x="150" y="40" /></Size>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                    <JustifyH value="CENTER"/>
+                    <JustifyV value="MIDDLE"/>
+                </FontString>
+            </Layer>
+        </Layers>
     </Frame>
 </Ui>
