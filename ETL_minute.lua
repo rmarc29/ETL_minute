@@ -6,10 +6,11 @@ local last_update = 0
 
 local function ETL_SetCustomFont()
     local fontPath = "Interface\\AddOns\\ETL_minute\\Enchanted_Land.ttf"
-    local fontSize = 12  
+    local fontSize = 14  
 
-    if ETL_frame_html then
-        ETL_frame_html:SetFont(fontPath, fontSize, "OUTLINE")
+    if ETL_CustomFontString then
+        ETL_CustomFontString:SetFont(fontPath, fontSize, "OUTLINE")
+        ETL_CustomFontString:SetText("Loading...")
     else
         DEFAULT_CHAT_FRAME:AddMessage("ETL: FontString not found!")
     end
@@ -30,7 +31,7 @@ function ETL_on_load()
         end
     end
 
-   
+    
     ETL_SetCustomFont()
 end
 
@@ -52,17 +53,9 @@ function ETL_on_update()
 end
 
 function update_display(xp_per_minute, etl_minutes)
-    ETL_frame_html:SetText(string.format(
-        [[
-        <html>
-        <body>
-            <h1 align="center">ETL %s</h1>
-            <br/>
-            <h2 align="center">XP/min %i</h2>
-        </body>
-        </html>
-        ]],
-        xp_per_minute > 0 and string.format('%im', etl_minutes) or 'N/A',
-        xp_per_minute
-    ))
+    if ETL_CustomFontString then
+        ETL_CustomFontString:SetText(string.format("ETL: %s\nXP/min: %i",
+            xp_per_minute > 0 and string.format("%im", etl_minutes) or "N/A",
+            xp_per_minute))
+    end
 end
