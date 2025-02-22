@@ -2,10 +2,18 @@ ETL_xp_gains = {}
 ETL_frame_coordinates = { x = 0, y = 0 }
 
 local REFRESH_INTERVAL = 1
-
-local update_display
-
 local last_update = 0
+
+local function ETL_SetCustomFont()
+    local fontPath = "Interface\\AddOns\\ETL_minute\\Enchanted_Land.ttf"
+    local fontSize = 12  
+
+    if ETL_frame_html then
+        ETL_frame_html:SetFont(fontPath, fontSize, "OUTLINE")
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("ETL: FontString not found!")
+    end
+end
 
 function ETL_on_xp_gain()
     local _, _, xp_part = strfind(arg1, '(%d+)')
@@ -21,6 +29,9 @@ function ETL_on_load()
             xp_gain.t = xp_gain.t - t0
         end
     end
+
+   
+    ETL_SetCustomFont()
 end
 
 function ETL_on_update()
