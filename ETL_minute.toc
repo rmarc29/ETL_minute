@@ -4,5 +4,6 @@
 ## SavedVariablesPerCharacter: ETL_xp_gains, ETL_frame_coordinates
 ## Author: shirsig
 ## Version by: rmarc29 (aka TNS)
+## Version : 0.0.1
 ETL_minute.xml
 
