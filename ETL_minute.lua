@@ -10,7 +10,9 @@ local last_update = 0
 function ETL_on_xp_gain()
     local _, _, xp_part = strfind(arg1, '(%d+)')
     local gained_xp = tonumber(xp_part)
-    tinsert(ETL_xp_gains, { t=GetTime(), xp=gained_xp })
+    if gained_xp then
+        tinsert(ETL_xp_gains, { t = GetTime(), xp = gained_xp })
+    end
 end
 
 function ETL_on_load()
@@ -24,18 +26,25 @@ function ETL_on_load()
 end
 
 function ETL_on_update()
-    if GetTime() - last_update > REFRESH_INTERVAL then
-        last_update = GetTime()
-        while ETL_xp_gains[1] and GetTime() - ETL_xp_gains[1].t > 60 do
+    local current_time = GetTime()
+    if current_time - last_update > REFRESH_INTERVAL then
+        last_update = current_time
+
+        -- Remove XP gains older than 60 seconds
+        while ETL_xp_gains[1] and current_time - ETL_xp_gains[1].t > 60 do
             tremove(ETL_xp_gains, 1)
         end
+
+        -- Calculate XP per minute
         local xp_per_minute = 0
         for _, xp_gain in ipairs(ETL_xp_gains) do
             xp_per_minute = xp_per_minute + xp_gain.xp
         end
-        local etl = (UnitXPMax('player') - UnitXP('player')) / xp_per_minute
-        local etl_minutes = math.ceil(etl)
 
+        -- Avoid division by zero
+        local etl_minutes = xp_per_minute > 0 and math.ceil((UnitXPMax('player') - UnitXP('player')) / xp_per_minute) or 0
+
+        -- Update display
         update_display(xp_per_minute, etl_minutes)
     end
 end
